@@ -1,0 +1,116 @@
+{
+    "tsg_blog_post": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "tsg_blog_tag_entity": {
+        "column": {
+            "entity_id": true,
+            "tag": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "tsg_blog_category_entity": {
+        "column": {
+            "entity_id": true,
+            "parent_id": true,
+            "created_at": true,
+            "updated_at": true,
+            "path": true,
+            "position": true,
+            "level": true,
+            "children_count": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "tsg_blog_category_entity_varchar": {
+        "column": {
+            "value_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "TSG_BLOG_CTGR_ENTT_VCHR_ENTT_ID_TSG_BLOG_CTGR_ENTT_ENTT_ID": true,
+            "TSG_BLOG_CATEGORY_ENTITY_VARCHAR_ENTITY_ID": true
+        }
+    },
+    "tsg_blog_category_post": {
+        "column": {
+            "entity_id": true,
+            "category_id": true,
+            "post_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "TSG_BLOG_CATEGORY_POST_POST_ID_TSG_BLOG_POST_ENTITY_ID": true,
+            "TSG_BLOG_CTGR_POST_CTGR_ID_TSG_BLOG_CTGR_ENTT_ENTT_ID": true,
+            "TSG_BLOG_CATEGORY_POST_CATEGORY_ID_POST_ID": true
+        }
+    },
+    "tsg_blog_tag_post": {
+        "column": {
+            "entity_id": true,
+            "tag_id": true,
+            "post_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "TSG_BLOG_TAG_POST_POST_ID_TSG_BLOG_POST_ENTITY_ID": true,
+            "TSG_BLOG_TAG_POST_TAG_ID_TSG_BLOG_TAG_ENTITY_ENTITY_ID": true,
+            "TSG_BLOG_TAG_POST_TAG_ID_POST_ID": true
+        }
+    },
+    "tsg_blog_post_text": {
+        "column": {
+            "value_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "TSG_BLOG_POST_TEXT_ENTITY_ID_TSG_BLOG_POST_ENTITY_ID": true,
+            "TSG_BLOG_POST_TEXT_ENTITY_ID": true
+        }
+    },
+    "tsg_blog_post_media_gallery": {
+        "column": {
+            "value_id": true,
+            "value": true,
+            "media_type": true,
+            "disabled": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "tsg_blog_post_media_gallery_value": {
+        "column": {
+            "record_id": true,
+            "value_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "label": true,
+            "position": true,
+            "disabled": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "TSG_BLOG_POST_MDA_GLR_VAL_VAL_ID_TSG_BLOG_POST_MDA_GLR_VAL_ID": true,
+            "TSG_BLOG_POST_MDA_GLR_VAL_ENTT_ID_TSG_BLOG_POST_ENTT_ID": true
+        }
+    }
+}
