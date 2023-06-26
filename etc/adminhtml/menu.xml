@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Tsg_Blog::blog" title="Blog" translate="title" module="Tsg_Blog" sortOrder="15" dependsOnModule="Tsg_Blog" resource="Tsg_Blog::blog"/>
+        <add id="Tsg_Blog::blog_posts" title="Posts" translate="title" module="Tsg_Blog" sortOrder="10" parent="Tsg_Blog::blog" action="blog/post/" resource="Tsg_Blog::posts"/>
+        <add id="Tsg_Blog::blog_categories" title="Categories" translate="title" module="Tsg_Blog" sortOrder="15" parent="Tsg_Blog::blog" action="blog/category/" resource="Tsg_Blog::categories"/>
+        <add id="Tsg_Blog::blog_tags" title="Tags" translate="title" module="Tsg_Blog" sortOrder="20" parent="Tsg_Blog::blog" action="blog/tags/" resource="Tsg_Blog::tags"/>
+        <add id="Tsg_Blog::blog_configuration" title="Configuration" translate="title" module="Tsg_Blog" sortOrder="25" parent="Tsg_Blog::blog" action="adminhtml/system_config/edit/section/helloworld/" resource="Tsg_Blog::blog_configuration"/>
+ </menu>
+</config>
