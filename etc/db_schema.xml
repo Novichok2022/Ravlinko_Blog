@@ -1,164 +1,23 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="tsg_blog_post" resource="default" engine="innodb" comment="Post Table">
-        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
-                comment="Entity ID"/>
-        <column xsi:type="varchar" name="title" nullable="false" length="255"
-                comment="Post Title"/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Post Created At"/>
-        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Post Updated At"/>
+    <table name="rav_blog_post" resource="default" engine="innodb" comment="Blog Post Table">
+        <column xsi:type="smallint" name="post_id" unsigned="false" nullable="false" identity="true"
+                comment="Post ID"/>
+        <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Post Title"/>
+        <column xsi:type="varchar" name="url_key" nullable="true" length="255" comment="Post Url Key"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Post Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Post Meta Description"/>
+        <column xsi:type="mediumtext" name="content" nullable="true" comment="Post Content"/>
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Post Creation Time"/>
+        <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Post Modification Time"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" length="255" comment="Post Meta Title"/>
+        <column xsi:type="varchar" name="featured_image" nullable="true" length="255" comment="Featured Image"/>
+
         <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="entity_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_tag_entity" resource="default" engine="innodb" comment="Blog Tag Table">
-        <column xsi:type="int" name="entity_id" identity="true" unsigned="true" nullable="false" comment="Entity ID"/>
-        <column xsi:type="varchar" name="tag" nullable="false" length="128" comment="Tag"/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Tag Created At"/>
-        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Tag Updated At"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="entity_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_category_entity" resource="default" engine="innodb" comment="Blog Category Table">
-        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
-                comment="Entity ID"/>
-        <column xsi:type="int" name="parent_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Parent Category ID"/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Creation Time"/>
-        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Update Time"/>
-        <column xsi:type="varchar" name="path" nullable="false" length="255" comment="Tree Path"/>
-        <column xsi:type="int" name="position" unsigned="false" nullable="false" identity="false"
-                comment="Position"/>
-        <column xsi:type="int" name="level" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Tree Level"/>
-        <column xsi:type="int" name="children_count" unsigned="false" nullable="false" identity="false"
-                comment="Child Count"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="entity_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_category_entity_varchar" resource="default" engine="innodb"
-           comment="Blog Category Varchar Attribute Backend Table">
-        <column xsi:type="int" name="value_id" unsigned="false" nullable="false" identity="true"
-                comment="Value ID"/>
-        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Entity ID"/>
-        <column xsi:type="varchar" name="value" nullable="true" length="255" comment="Value"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="value_id"/>
-        </constraint>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_CTGR_ENTT_VCHR_ENTT_ID_BLOG_CTGR_ENTT_ENTT_ID"
-                    table="tsg_blog_category_entity_varchar" column="entity_id" referenceTable="tsg_blog_category_entity"
-                    referenceColumn="entity_id" onDelete="CASCADE"/>
-        <constraint xsi:type="unique" referenceId="TSG_BLOG_CATEGORY_ENTITY_VARCHAR_ENTITY_ID">
-            <column name="entity_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_category_post" resource="default" engine="innodb"
-           comment="Blog Post To Category Linkage Table">
-        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
-                comment="Entity ID"/>
-        <column xsi:type="int" name="category_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Category ID"/>
-        <column xsi:type="int" name="post_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Post ID"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="entity_id"/>
-        </constraint>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_CTGR_PST_PST_ID_TSG_BLOG_PST_ENTT_ID" table="tsg_blog_category_post"
-                    column="post_id" referenceTable="tsg_blog_post" referenceColumn="entity_id"
-                    onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_CTGR_PST_CTGR_ID_TSG_BLOG_CTGR_ENTT_ENTT_ID"
-                    table="tsg_blog_category_post" column="category_id" referenceTable="tsg_blog_category_entity"
-                    referenceColumn="entity_id" onDelete="CASCADE"/>
-        <constraint xsi:type="unique" referenceId="TSG_BLOG_CATEGORY_POST_CATEGORY_ID_POST_ID">
-            <column name="category_id"/>
             <column name="post_id"/>
         </constraint>
-    </table>
-    <table name="tsg_blog_tag_post" resource="default" engine="innodb"
-           comment="Blog Post To Tag Linkage Table">
-        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
-                comment="Entity ID"/>
-        <column xsi:type="int" name="tag_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Tag ID"/>
-        <column xsi:type="int" name="post_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Post ID"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="entity_id"/>
-        </constraint>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_TAG_PST_PST_ID_TSG_BLOG_PST_ENTT_ID" table="tsg_blog_tag_post"
-                    column="post_id" referenceTable="tsg_blog_post" referenceColumn="entity_id"
-                    onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_TAG_PST_TAG_ID_TSG_BLOG_TAG_ENTT_ENTT_ID"
-                    table="tsg_blog_tag_post" column="tag_id" referenceTable="tsg_blog_tag_entity"
-                    referenceColumn="entity_id" onDelete="CASCADE"/>
-        <constraint xsi:type="unique" referenceId="TSG_BLOG_TAG_POST_TAG_ID_POST_ID">
-            <column name="tag_id"/>
-            <column name="post_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_post_text" resource="default" engine="innodb"
-           comment="Blog Post Text Table">
-        <column xsi:type="int" name="value_id" unsigned="false" nullable="false" identity="true"
-                comment="Value ID"/>
-        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Entity ID"/>
-        <column xsi:type="mediumtext" name="value" nullable="true" comment="Value"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="value_id"/>
-        </constraint>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_PST_TEXT_ENTT_ID_TSG_BLOG_PST_ENTT_ID"
-                    table="tsg_blog_post_text" column="entity_id" referenceTable="tsg_blog_post"
-                    referenceColumn="entity_id" onDelete="CASCADE"/>
-        <constraint xsi:type="unique" referenceId="TSG_BLOG_POST_TEXT_ENTITY_ID">
-            <column name="entity_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_post_media_gallery" resource="default" engine="innodb"
-           comment="Blog Post Media Gallery Table">
-        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="true"
-                comment="Value ID"/>
-        <column xsi:type="varchar" name="value" nullable="true" length="255" comment="Value"/>
-        <column xsi:type="varchar" name="media_type" nullable="false" length="32" default="image"
-                comment="Media entry type"/>
-        <column xsi:type="smallint" name="disabled" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Visibility status"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="value_id"/>
-        </constraint>
-    </table>
-    <table name="tsg_blog_post_media_gallery_value" resource="default" engine="innodb"
-           comment="Blog Post Media Gallery Value Table">
-        <column xsi:type="int" name="record_id" unsigned="true" nullable="false" identity="true"
-                comment="Record ID"/>
-        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Value ID"/><column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Store ID"/>
-        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Entity ID"/>
-        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Label"/>
-        <column xsi:type="int" name="position" unsigned="true" nullable="true" identity="false"
-                comment="Position"/>
-        <column xsi:type="smallint" name="disabled" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Is Disabled"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="record_id"/>
-        </constraint>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_PST_MDA_GLR_VAL_VAL_ID_TSG_BLOG_PST_MDA_GLR_VAL_ID"
-                    table="tsg_blog_post_media_gallery_value" column="value_id"
-                    referenceTable="tsg_blog_post_media_gallery" referenceColumn="value_id"
-                    onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="TSG_BLOG_PST_MDA_GLR_VAL_ENTT_ID_TSG_BLOG_PST_ENTT_ID"
-                    table="tsg_blog_post_media_gallery_value" column="entity_id"
-                    referenceTable="tsg_blog_post" referenceColumn="entity_id" onDelete="CASCADE"/>
     </table>
 </schema>

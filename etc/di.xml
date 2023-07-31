@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ravlinko\Blog\Api\Data\PostInterface" type="Ravlinko\Blog\Model\Post"/>
+    <preference for="Ravlinko\Blog\Api\Data\PostSearchResultsInterface" type="Ravlinko\Blog\Model\Data\PostSearchResults"/>
+    <preference for="Ravlinko\Blog\Api\PostRepositoryInterface" type="Ravlinko\Blog\Model\PostRepository"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="rav_blog_post_listing_data_source" xsi:type="string">Ravlinko\Blog\Model\ResourceModel\Post\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ravlinko\Blog\Model\ResourceModel\Post\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">rav_blog_post</argument>
+            <argument name="eventPrefix" xsi:type="string">rav_blog_post_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">post_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ravlinko\Blog\Model\ResourceModel\Post</argument>
+        </arguments>
+    </type>
+</config>
